@@ -1,12 +1,12 @@
 # BME280 Environmental Sensor Module (I²C)
 
-A compact and reliable BME280 breakout module designed for accurate temperature, humidity, and pressure sensing using the I²C interface. This module is optimized for 3.3 V embedded systems and emphasizes proper power integrity, address configuration, and signal reliability.
+A compact and reliable BME280 breakout module designed for accurate temperature, humidity, and pressure sensing using the I²C interface. This module is optimized for 3.3 V embedded systems and emphasizes proper power integrity, signal integrity, manufacturability, and validation readiness.
 
 ---
 
 ## Overview
 
-This project is a custom-designed BME280 sensor module intended for use in embedded systems, robotics, and IoT applications. The goal was to design a clean, reusable hardware module while applying datasheet-driven design practices, proper decoupling, and robust I²C communication standards.
+This project is a custom-designed BME280 sensor module intended for use in embedded systems, robotics, and IoT applications. The goal was to design a clean, reusable hardware module while applying datasheet-driven design practices, proper decoupling, robust I²C communication standards, and design-for-manufacturing (DFM/DFA) considerations.
 
 The module supports 3.3 V operation and is suitable for direct connection to microcontrollers such as Arduino, ESP32, STM32, and Raspberry Pi Pico.
 
@@ -20,7 +20,8 @@ The module supports 3.3 V operation and is suitable for direct connection to mic
 - On-board **I²C pull-up resistors**
 - Proper **decoupling and bulk capacitance**
 - Default I²C address configured via **SDO pin**
-- Compact, reusable PCB footprint
+- Test points for power and I²C lines
+- Compact, reusable PCB footprint optimized for assembly
 
 ---
 
@@ -43,8 +44,9 @@ The module supports 3.3 V operation and is suitable for direct connection to mic
 - **VDD and VDDIO** are powered at 3.3 V to match microcontroller logic levels.
 - **I²C pull-up resistors (4.7 kΩ)** are connected to 3.3 V to ensure reliable SDA/SCL signaling.
 - **Decoupling capacitors (100 nF)** are placed close to the BME280 supply pins to suppress high-frequency noise.
-- A **bulk capacitor** is included to improve supply stability.
+- A **bulk capacitor** is included to stabilize the local power rail during transient current events.
 - The **SDO pin is tied to GND** by default to select the lower I²C address.
+- **Test points** are provided on critical nets (3.3 V, GND, SDA, SCL) to simplify probing, debugging, and validation.
 
 ---
 
@@ -64,13 +66,20 @@ The module supports 3.3 V operation and is suitable for direct connection to mic
 
 The BME280 supports two I²C addresses:
 
-- **SDO = GND → 0x76 (default)**
-- **SDO = VDDIO → 0x77**
+- **SDO = 0 (GND)→ 0x76 (default)**
+- **SDO = 1 (VDDIO) → 0x77**
 
 In this design, the SDO pin is permanently tied to ground to ensure a consistent default address and simplify system integration.
 
 ---
 
+## Signal Integrity Considerations
+
+- Proper pull-up resistor sizing ensures clean SDA/SCL rise times and prevents bus instability.
+- Short trace lengths and direct routing were used for I²C lines to minimize capacitance and noise pickup.
+- Adequate ground referencing and decoupling placement were used, to improve signal reliability and filter power rail noise.
+
+---
 ## Test & Validation
 
 - Powered using a regulated **3.3 V supply**
