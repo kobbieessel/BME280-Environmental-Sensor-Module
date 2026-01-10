@@ -35,7 +35,7 @@ The module supports 3.3 V operation and is suitable for direct connection to mic
 
 > ![PCB LAYOUT](Images/PCBLayout.png)
 
-### 3D View (Optional)
+### 3D View 
 
 > ![PCB TOP VIEW](Images/pcb_top.png) > ![PCB BOTTOM VIEW](Images/pcb_bottom.png)
 
